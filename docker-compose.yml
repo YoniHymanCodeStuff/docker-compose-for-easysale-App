@@ -1,0 +1,27 @@
+version: '3.8' 
+
+services:
+  angular-app:
+    image: yonihyman/aspnet_demo:easy_sale_angular
+    ports:
+      - "4200:80"
+    depends_on:
+      - dotnet-app
+
+  dotnet-app:
+    image: yonihyman/aspnet_demo:easy_sale_api
+    ports:
+      - "5000:80"
+    depends_on:
+      - database
+    environment:
+       ConnectionStrings__DefaultConnection:
+        "Server=database;Database=EasySale;User Id=sa;Password=c%#j4NKTo6;"
+
+  database:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      SA_PASSWORD: "c%#j4NKTo6"
+      ACCEPT_EULA: "Y"
+
+
